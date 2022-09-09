@@ -1,0 +1,114 @@
+#root {
+  max-width: 1280px;
+  /* margin: 0 auto; */
+  /* padding: 2rem; */
+  text-align: center;
+  font-size: 18px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.App {
+  font-size: 18px;
+  font-family: 'Space Grotesk', sans-serif;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  background: no-repeat left/30% url('./assets/images/bg-main-desktop.png');
+  gap: 2em;
+  /* background-position: left; */
+}
+
+.item {
+  background-color: transparent;
+  width: 483px;
+}
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: hsl(0, 0%, 100%);
+  color: hsl(278, 68%, 11%);
+  text-align: start;
+}
+
+.submit-button {
+  background-color: hsl(278, 68%, 11%);
+  padding: 12px;
+  width: 60%;
+  border-radius: 8px;
+  color: hsl(0, 0%, 100%);
+  position: relative;
+  left: 10%;
+}
+
+.card-front {
+  margin-top: 4em;
+  margin-bottom: 20px;
+  padding-left: 4em;
+  position: relative;
+}
+
+.card-front>img {
+  display: block
+}
+
+.card-logo {
+  top: 1.6em;
+  right: 22em;
+  position: absolute;
+}
+
+.card-back {
+  margin-left: 8em;
+}
+
+.card-details {
+  color: hsl(0, 0%, 100%);
+  bottom: 2em;
+  right: 12em;
+  position: absolute;
+}
+
+.card-number {
+  letter-spacing: 10px;
+  font-size: 18px;
+}
+
+.bottom-fieldset {
+  width: 75%;
+  display: flex;
+  flex: 1;
+}
+
+form>div {
+  width: 75%;
+}
+
+input {
+  width: 100%;
+  border-radius: .2em;
+  border: hsl(279, 6%, 55%) solid 1px;
+  padding: 4px;
+}
+
+.cvv {
+  width: 50%;
+}
+
+.expiry {
+  width: 50%;
+}
+
+.expiry>input[type=text] {
+  width: 25%;
+  /* margin-inline: 2px; */
+}
+
+.expiry>input:first-of-type {
+  margin-right: 14px;
+}
+
+.cvc {
+  width: 60%;
+}
