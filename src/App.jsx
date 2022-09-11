@@ -10,30 +10,40 @@ function App() {
   const [cardDetails, setCardDetails] = useState({
     cardNumber: "000000000000",
     holderName: "JANE APPLESEED",
-    mm: "",
-    yy: "",
-    cvv: "",
+    mm: "09",
+    yy: "00",
+    cvv: "000",
   });
   const handleSubmit = (e) => {
     e.preventDefault();
   };
   const handleChange = (e) =>
-    setCardDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setCardDetails((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value.toUpperCase(),
+    }));
   return (
     <div className="App">
       <div className="card-images">
         <div className="card-front">
-          <img src={cardFront} alt="" />
-          <img src={cardLogo} alt="" className="card-logo" />
+          <img src={cardFront} alt="front of the ATM card" />
+          <img src={cardLogo} alt="ATM card logo" className="card-logo" />
           <div className="card-details">
-            <p className="card-number">{cardDetails.cardNumber}</p>
+            <p className="card-number">
+              {cardDetails.cardNumber.replace(/\d{4}(?=.)/g, "$& ")}
+            </p>
             <p>
               <span>{cardDetails.holderName}</span>
-              <span>{cardDetails.expiry}</span>
+              <span>
+                {cardDetails.mm}/{cardDetails.yy}
+              </span>
             </p>
           </div>
         </div>
-        <img src={cardBack} alt="" className="card-back" />
+        <div className="card-back">
+          <img src={cardBack} alt="back of the ATM card" />
+          <p>{cardDetails.cvv}</p>
+        </div>
       </div>
       <div className="form-card">
         <form action="" onSubmit={handleSubmit}>
@@ -44,6 +54,7 @@ function App() {
               name="holderName"
               placeholder="e.g. Jane Appleseed"
               onChange={handleChange}
+              value={cardDetails.holderName}
             />
           </div>
           <div>
@@ -53,6 +64,7 @@ function App() {
               name="cardNumber"
               placeholder="e.g. 1234 5678 9123 0000 "
               onChange={handleChange}
+              value={cardDetails.cardNumber}
             />
           </div>
           <div className="bottom-fieldset">
