@@ -8,9 +8,14 @@
   font-weight: 500;
 }
 
-img:not(.card-logo) {
+.card-images img:not(.card-logo) {
+  /* width: clamp(300px, 447px, 447px); */
   width: 300px;
   display: block;
+}
+
+.card-front>img:not(.card-logo) {
+  box-shadow: 0px 2em 6em rgba(76, 76, 85, 0.53)
 }
 
 .card-front {
@@ -61,7 +66,8 @@ img:not(.card-logo) {
   background-color: hsl(0, 0%, 100%);
   color: hsl(278, 68%, 11%);
   text-align: start;
-  font-size: 12px;
+  font-size: 14px;
+  margin-inline: 1em;
 }
 
 .bottom-fieldset {
@@ -99,6 +105,36 @@ input {
   padding: 4px;
 }
 
+input:active {
+  border-image: linear-gradient(hsl(249, 99%, 64%) to hsl(278, 94%, 30%));
+}
+
+input:invalid {
+  border-color: hsl(0, 100%, 66%);
+}
+
+
+
+
+.confirmation p:first-of-type {
+  color: hsl(278, 68%, 11%);
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.confirmation p:first-of-type+p {
+  color: hsl(279, 6%, 55%);
+}
+
+.confirmation button {
+  background-color: hsl(278, 68%, 11%);
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  color: hsl(0, 0%, 100%);
+  /* position: relative; */
+}
+
 @media (min-width:40em) {
 
   .App {
@@ -108,7 +144,7 @@ input {
     height: 100vh;
     display: flex;
     background: no-repeat left/30% url('./assets/images/bg-main-desktop.png');
-    gap: 6em;
+    gap: 12em;
     /* background-position: left; */
   }
 
@@ -124,6 +160,7 @@ input {
     background-color: hsl(0, 0%, 100%);
     color: hsl(278, 68%, 11%);
     text-align: start;
+    width: 30%;
   }
 
   .submit-button {
@@ -138,15 +175,16 @@ input {
 
   .card-front {
     width: 80%;
-    margin-top: 4em;
-    margin-bottom: 20px;
+
+    top: 6em;
     padding-left: 4em;
     position: relative;
     color: hsl(0, 0%, 100%);
 
   }
 
-  .card-front>img {
+  .card-images img:not(.card-logo) {
+    width: 100%;
     display: block
   }
 
@@ -160,6 +198,7 @@ input {
     margin-left: 8em;
     color: hsl(0, 0%, 100%);
     position: relative;
+    top: 8em;
   }
 
   .card-back>p {
@@ -181,7 +220,7 @@ input {
   }
 
   .card-number {
-    letter-spacing: 8px;
+    letter-spacing: 4px;
     font-size: 18px;
   }
 
@@ -221,5 +260,11 @@ input {
 
   .cvc {
     width: 60%;
+  }
+
+  .confirmation {
+    position: relative;
+    right: -4em;
+    top: 8em;
   }
 }
