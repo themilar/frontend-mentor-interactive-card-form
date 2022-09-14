@@ -129,26 +129,6 @@ input:active {
   border-image: linear-gradient(hsl(249, 99%, 64%) to hsl(278, 94%, 30%));
 }
 
-/* input:invalid {
-  border-color: hsl(0, 100%, 66%);
-} */
-
-.submit-button::after {
-  content: "Bad content";
-  color: blue;
-  display: block;
-  font-size: 5em;
-  z-index: 20;
-  position: relative;
-}
-
-/* div[data-error]>input:hover:after {
-  border-color: blue;
-  content: "attr(data-error);";
-  font-size: 5em;
-  color: blue;
-  display: block;
-} */
 
 
 

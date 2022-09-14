@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import cardFront from "./assets/images/bg-card-front.png";
 import cardBack from "./assets/images/bg-card-back.png";
 import cardLogo from "./assets/images/card-logo.svg";
@@ -6,6 +6,7 @@ import iconComplete from "./assets/images/icon-complete.svg";
 import "./App.css";
 
 function App() {
+  const cardInput = useRef();
   const [cardDetails, setCardDetails] = useState({
     cardNumber: "0000000000000000",
     holderName: "JANE APPLESEED",
@@ -53,6 +54,7 @@ function App() {
     () => testNumericValues(cardDetails.cardNumber),
     [cardDetails.cardNumber]
   );
+  useEffect(() => cardInput.current.focus(), [cardInput]);
   const handleClick = (e) => setConfirmed(!confirmed);
 
   return (
@@ -96,6 +98,7 @@ function App() {
                 placeholder="e.g. Jane Appleseed"
                 onChange={handleChange}
                 maxLength={24}
+                ref={cardInput}
                 required
               />
             </div>
