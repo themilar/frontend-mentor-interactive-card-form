@@ -1,5 +1,4 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useEffect, useState } from "react";
 import cardFront from "./assets/images/bg-card-front.png";
 import cardBack from "./assets/images/bg-card-back.png";
 import cardLogo from "./assets/images/card-logo.svg";
@@ -8,24 +7,54 @@ import "./App.css";
 
 function App() {
   const [cardDetails, setCardDetails] = useState({
-    cardNumber: "000000000000",
+    cardNumber: "0000000000000000",
     holderName: "JANE APPLESEED",
     month: "00",
     year: "00",
     cvv: "000",
   });
   const [confirmed, setConfirmed] = useState(false);
+  const [inputErrors, setInputErrors] = useState({
+    numbersOnly: true,
+    blankNumericField: { month: true, year: true, cvv: true },
+  });
+  const testNumericValues = (value) =>
+    /^\d+$/.test(value)
+      ? setInputErrors((prev) => ({ ...prev, numbersOnly: true }))
+      : setInputErrors((prev) => ({ ...prev, numbersOnly: false }));
+  const testBlankFields = (field) =>
+    /\d+/.test(field.value)
+      ? setInputErrors((prev) => ({
+          ...prev,
+          blankNumericField: {
+            ...prev.blankNumericField,
+            [field.name]: false,
+          },
+        }))
+      : setInputErrors((prev) => ({
+          ...prev,
+          blankNumericField: { ...prev.blankNumericField, [field.name]: true },
+        }));
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setConfirmed(!confirmed);
   };
-  const handleChange = (e) =>
+  const handleChange = (e) => (
     setCardDetails((prev) => ({
       ...prev,
+
       [e.target.name]: e.target.value.toUpperCase(),
-    }));
+    })),
+    // testNumericValues(cardDetails.cardNumber),
+    testBlankFields(e.target)
+  );
+  useEffect(
+    () => testNumericValues(cardDetails.cardNumber),
+    [cardDetails.cardNumber]
+  );
   const handleClick = (e) => setConfirmed(!confirmed);
+
   return (
     <div className="App">
       <div className="card-images">
@@ -72,7 +101,9 @@ function App() {
             </div>
             <div
               title="16 numeric characters are required"
-              data-error="Wrong format numbers only"
+              data-error={
+                !inputErrors.numbersOnly ? "Wrong format. Numbers only" : ""
+              }
             >
               <p> CARD NUMBER</p>
               <input
@@ -84,42 +115,63 @@ function App() {
                 minLength={16}
                 maxLength={16}
                 required
+                data-error-border={!inputErrors.numbersOnly}
                 // value={cardDetails.cardNumber}
               />
             </div>
-            <div className="bottom-fieldset" data-error="Can't be blank">
+            <div className="bottom-fieldset">
               <span className="expiry">
                 <p>EXP. DATE (MM/YY)</p>
-                <input
-                  type="text"
-                  name="month"
-                  placeholder="MM"
-                  onChange={handleChange}
-                  pattern="[0-9]{2}"
-                  maxLength={2}
-                  required
-                />
-                <input
-                  type="text"
-                  name="year"
-                  placeholder="YY"
-                  onChange={handleChange}
-                  pattern="[0-9]{2}"
-                  maxLength={2}
-                  required
-                />
+                <div
+                  className="expiry"
+                  data-error={
+                    inputErrors.blankNumericField.month ||
+                    inputErrors.blankNumericField.year
+                      ? "Can't be blank"
+                      : ""
+                  }
+                >
+                  <input
+                    type="text"
+                    name="month"
+                    placeholder="MM"
+                    onChange={handleChange}
+                    pattern="[0-9]{2}"
+                    maxLength={2}
+                    data-error-border={inputErrors.blankNumericField.month}
+                    required
+                  />
+
+                  <input
+                    type="text"
+                    name="year"
+                    placeholder="YY"
+                    onChange={handleChange}
+                    pattern="[0-9]{2}"
+                    maxLength={2}
+                    data-error-border={inputErrors.blankNumericField.year}
+                    required
+                  />
+                </div>
               </span>
               <span className="cvc">
-                <p>CVC</p>
-                <input
-                  type="text"
-                  name="cvv"
-                  placeholder="e.g. 123 "
-                  onChange={handleChange}
-                  pattern="[0-9]{3}"
-                  maxLength={3}
-                  required
-                />
+                <div
+                  data-error={
+                    inputErrors.blankNumericField.cvv ? "Can't be blank" : ""
+                  }
+                >
+                  <p>CVC</p>
+                  <input
+                    type="text"
+                    name="cvv"
+                    placeholder="e.g. 123 "
+                    onChange={handleChange}
+                    pattern="[0-9]{3}"
+                    maxLength={3}
+                    data-error-border={inputErrors.blankNumericField.cvv}
+                    required
+                  />
+                </div>
               </span>
             </div>
             <p>

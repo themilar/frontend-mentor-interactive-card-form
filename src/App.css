@@ -8,6 +8,25 @@
   font-weight: 500;
 }
 
+div[data-error]::after {
+  color: hsl(0, 100%, 66%);
+  content: attr(data-error);
+  font-size: 14px;
+  display: block;
+}
+
+input[data-error-border=true] {
+  border-color: hsl(0, 100%, 66%);
+}
+
+div.expiry {
+  width: 100%;
+}
+
+div.expiry>input {
+  width: 100%;
+}
+
 .card-images img:not(.card-logo) {
   /* width: clamp(300px, 447px, 447px); */
   width: 300px;
@@ -85,7 +104,7 @@
 }
 
 .cvc {
-  width: 60%;
+  width: 100%;
 }
 
 .submit-button {
@@ -102,17 +121,34 @@ input {
   width: 100%;
   border-radius: .2em;
   border: hsl(279, 6%, 55%) solid 1px;
-  padding: 4px;
+  padding-block: .7em;
+  padding-inline: 8px;
 }
 
 input:active {
   border-image: linear-gradient(hsl(249, 99%, 64%) to hsl(278, 94%, 30%));
 }
 
-input:invalid {
+/* input:invalid {
   border-color: hsl(0, 100%, 66%);
+} */
+
+.submit-button::after {
+  content: "Bad content";
+  color: blue;
+  display: block;
+  font-size: 5em;
+  z-index: 20;
+  position: relative;
 }
 
+/* div[data-error]>input:hover:after {
+  border-color: blue;
+  content: "attr(data-error);";
+  font-size: 5em;
+  color: blue;
+  display: block;
+} */
 
 
 
@@ -238,7 +274,7 @@ input:invalid {
     width: 100%;
     border-radius: .2em;
     border: hsl(279, 6%, 55%) solid 1px;
-    padding: 4px;
+
   }
 
   .cvv {
