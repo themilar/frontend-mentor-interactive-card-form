@@ -117,8 +117,9 @@ function App() {
                 pattern="[0-9]+"
                 minLength={16}
                 maxLength={16}
-                required
                 data-error-border={!inputErrors.numbersOnly}
+                inputMode="numeric"
+                required
                 // value={cardDetails.cardNumber}
               />
             </div>
@@ -142,6 +143,7 @@ function App() {
                     pattern="[0-9]{2}"
                     maxLength={2}
                     data-error-border={inputErrors.blankNumericField.month}
+                    inputMode="numeric"
                     required
                   />
 
@@ -153,6 +155,7 @@ function App() {
                     pattern="[0-9]{2}"
                     maxLength={2}
                     data-error-border={inputErrors.blankNumericField.year}
+                    inputMode="numeric"
                     required
                   />
                 </div>
@@ -172,6 +175,7 @@ function App() {
                     pattern="[0-9]{3}"
                     maxLength={3}
                     data-error-border={inputErrors.blankNumericField.cvv}
+                    inputMode="numeric"
                     required
                   />
                 </div>
