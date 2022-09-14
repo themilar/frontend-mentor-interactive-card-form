@@ -59,11 +59,13 @@ function App() {
   useEffect(() => {
     cardInput.current?.focus();
     return () => {
-      setCardDetails(initialCardState), setInputErrors(initialErrorState);
+      setInputErrors(initialErrorState);
     };
   }, [confirmed, cardInput]);
 
-  const handleClick = (e) => setConfirmed(!confirmed);
+  const handleClick = (e) => {
+    setCardDetails(initialCardState), setConfirmed(!confirmed);
+  };
 
   return (
     <div className="App">
