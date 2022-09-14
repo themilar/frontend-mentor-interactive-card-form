@@ -110,7 +110,7 @@ function App() {
             >
               <p> CARD NUMBER</p>
               <input
-                type="number"
+                type="text"
                 name="cardNumber"
                 placeholder="e.g. 1234 5678 9123 0000 "
                 onChange={handleChange}
@@ -135,7 +135,7 @@ function App() {
                   }
                 >
                   <input
-                    type="number"
+                    type="text"
                     name="month"
                     placeholder="MM"
                     onChange={handleChange}
@@ -146,7 +146,7 @@ function App() {
                   />
 
                   <input
-                    type="number"
+                    type="text"
                     name="year"
                     placeholder="YY"
                     onChange={handleChange}

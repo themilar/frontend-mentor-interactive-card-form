@@ -125,30 +125,6 @@ input {
   padding-inline: 8px;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-  width: 100%;
-  border-radius: .2em;
-  border: hsl(279, 6%, 55%) solid 1px;
-  padding-block: .7em;
-  padding-inline: 8px;
-}
-
-input[type=number] {
-  -moz-appearance: textfield;
-  width: auto;
-  width: 100%;
-  border-radius: .2em;
-  border: hsl(279, 6%, 55%) solid 1px;
-  padding-block: .7em;
-  padding-inline: 8px;
-}
-
-.expiry>input[type=number] {
-  width: 25%;
-}
 
 input:active {
   border-image: linear-gradient(hsl(249, 99%, 64%) to hsl(278, 94%, 30%));
