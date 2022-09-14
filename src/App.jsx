@@ -7,18 +7,20 @@ import "./App.css";
 
 function App() {
   const cardInput = useRef();
-  const [cardDetails, setCardDetails] = useState({
+  const initialCardState = {
     cardNumber: "0000000000000000",
     holderName: "JANE APPLESEED",
     month: "00",
     year: "00",
     cvv: "000",
-  });
-  const [confirmed, setConfirmed] = useState(false);
-  const [inputErrors, setInputErrors] = useState({
+  };
+  const initialErrorState = {
     numbersOnly: true,
     blankNumericField: { month: true, year: true, cvv: true },
-  });
+  };
+  const [cardDetails, setCardDetails] = useState(initialCardState);
+  const [confirmed, setConfirmed] = useState(false);
+  const [inputErrors, setInputErrors] = useState(initialErrorState);
   const testNumericValues = (value) =>
     /^\d+$/.test(value)
       ? setInputErrors((prev) => ({ ...prev, numbersOnly: true }))
@@ -47,14 +49,20 @@ function App() {
 
       [e.target.name]: e.target.value.toUpperCase(),
     })),
-    // testNumericValues(cardDetails.cardNumber),
     testBlankFields(e.target)
   );
   useEffect(
     () => testNumericValues(cardDetails.cardNumber),
     [cardDetails.cardNumber]
   );
-  useEffect(() => cardInput.current.focus(), [cardInput]);
+
+  useEffect(() => {
+    cardInput.current?.focus();
+    return () => {
+      setCardDetails(initialCardState), setInputErrors(initialErrorState);
+    };
+  }, [confirmed, cardInput]);
+
   const handleClick = (e) => setConfirmed(!confirmed);
 
   return (
