@@ -127,9 +127,8 @@ input {
 
 
 input:active {
-  border-image: linear-gradient(hsl(249, 99%, 64%) to hsl(278, 94%, 30%));
+  border-image: linear-gradient(hsl(251, 52%, 96%), hsl(278, 94%, 30%))10/1px/1px;
 }
-
 
 
 

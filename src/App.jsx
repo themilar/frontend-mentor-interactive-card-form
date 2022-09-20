@@ -16,16 +16,19 @@ function App() {
   };
   const initialErrorState = {
     numbersOnly: true,
-    blankNumericField: { month: true, year: true, cvv: true },
+    blankNumericField: { month: false, year: false, cvv: false },
   };
+
   const [cardDetails, setCardDetails] = useState(initialCardState);
   const [confirmed, setConfirmed] = useState(false);
   const [inputErrors, setInputErrors] = useState(initialErrorState);
-  const testNumericValues = (value) =>
+
+  const validateNumericValues = (value) =>
     /^\d+$/.test(value)
       ? setInputErrors((prev) => ({ ...prev, numbersOnly: true }))
       : setInputErrors((prev) => ({ ...prev, numbersOnly: false }));
-  const testBlankFields = (field) =>
+
+  const validateBlankFields = (field) =>
     /\d+/.test(field.value)
       ? setInputErrors((prev) => ({
           ...prev,
@@ -38,23 +41,24 @@ function App() {
           ...prev,
           blankNumericField: { ...prev.blankNumericField, [field.name]: true },
         }));
+
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setConfirmed(!confirmed);
   };
-  const handleChange = (e) => (
+  const handleChange = (e) =>
     setCardDetails((prev) => ({
       ...prev,
 
       [e.target.name]: e.target.value.toUpperCase(),
-    })),
-    testBlankFields(e.target)
-  );
-  useEffect(
-    () => testNumericValues(cardDetails.cardNumber),
-    [cardDetails.cardNumber]
-  );
+    }));
+  const handleBlur = (e) => {
+    validateBlankFields(e.target);
+  };
+  useEffect(() => {
+    validateNumericValues(cardDetails.cardNumber);
+  }, [cardDetails.cardNumber]);
 
   useEffect(() => {
     cardInput.current?.focus();
@@ -150,6 +154,7 @@ function App() {
                     name="month"
                     placeholder="MM"
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     pattern="[0-9]{2}"
                     maxLength={2}
                     data-error-border={inputErrors.blankNumericField.month}
@@ -162,6 +167,7 @@ function App() {
                     name="year"
                     placeholder="YY"
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     pattern="[0-9]{2}"
                     maxLength={2}
                     data-error-border={inputErrors.blankNumericField.year}
@@ -182,6 +188,7 @@ function App() {
                     name="cvv"
                     placeholder="e.g. 123 "
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     pattern="[0-9]{3}"
                     maxLength={3}
                     data-error-border={inputErrors.blankNumericField.cvv}
