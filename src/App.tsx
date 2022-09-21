@@ -1,12 +1,23 @@
-import { useEffect, useState, useRef } from "react";
+import {
+  useEffect,
+  useState,
+  useRef,
+  SyntheticEvent,
+  FormEvent,
+  ChangeEvent,
+} from "react";
 import cardFront from "./assets/images/bg-card-front.png";
 import cardBack from "./assets/images/bg-card-back.png";
 import cardLogo from "./assets/images/card-logo.svg";
 import iconComplete from "./assets/images/icon-complete.svg";
 import "./App.css";
 
+interface InputType {
+  name: string;
+  value: string;
+}
 function App() {
-  const cardInput = useRef();
+  const cardInput = useRef<HTMLInputElement>(null);
   const initialCardState = {
     cardNumber: "0000000000000000",
     holderName: "JANE APPLESEED",
@@ -23,12 +34,12 @@ function App() {
   const [confirmed, setConfirmed] = useState(false);
   const [inputErrors, setInputErrors] = useState(initialErrorState);
 
-  const validateNumericValues = (value) =>
+  const validateNumericValues = (value: string) =>
     /^\d+$/.test(value)
       ? setInputErrors((prev) => ({ ...prev, numbersOnly: true }))
       : setInputErrors((prev) => ({ ...prev, numbersOnly: false }));
 
-  const validateBlankFields = (field) =>
+  const validateBlankFields = (field: InputType) =>
     /\d+/.test(field.value)
       ? setInputErrors((prev) => ({
           ...prev,
@@ -42,19 +53,23 @@ function App() {
           blankNumericField: { ...prev.blankNumericField, [field.name]: true },
         }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setConfirmed(!confirmed);
   };
-  const handleChange = (e) =>
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setCardDetails((prev) => ({
       ...prev,
 
       [e.target.name]: e.target.value.toUpperCase(),
     }));
-  const handleBlur = (e) => {
-    validateBlankFields(e.target);
+  const handleClick = (e: SyntheticEvent) => {
+    setCardDetails(initialCardState), setConfirmed(!confirmed);
+  };
+  const handleBlur = (e: SyntheticEvent): void => {
+    const target = e.target as typeof e.target & InputType;
+    validateBlankFields(target);
   };
   useEffect(() => {
     validateNumericValues(cardDetails.cardNumber);
@@ -66,10 +81,6 @@ function App() {
       setInputErrors(initialErrorState);
     };
   }, [confirmed, cardInput]);
-
-  const handleClick = (e) => {
-    setCardDetails(initialCardState), setConfirmed(!confirmed);
-  };
 
   return (
     <div className="App">
@@ -167,7 +178,7 @@ function App() {
                     name="year"
                     placeholder="YY"
                     onChange={handleChange}
-                    onBlur={handleBlur}
+                    // onBlur={handleBlur}
                     pattern="[0-9]{2}"
                     maxLength={2}
                     data-error-border={inputErrors.blankNumericField.year}
@@ -188,7 +199,7 @@ function App() {
                     name="cvv"
                     placeholder="e.g. 123 "
                     onChange={handleChange}
-                    onBlur={handleBlur}
+                    // onBlur={handleBlur}
                     pattern="[0-9]{3}"
                     maxLength={3}
                     data-error-border={inputErrors.blankNumericField.cvv}
@@ -203,7 +214,7 @@ function App() {
             </p>
           </form>
         </div>
-      )}{" "}
+      )}
     </div>
   );
 }
