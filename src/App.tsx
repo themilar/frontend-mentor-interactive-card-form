@@ -64,7 +64,7 @@ function App() {
 
       [e.target.name]: e.target.value.toUpperCase(),
     }));
-  const handleClick = (e: SyntheticEvent) => {
+  const handleClick = () => {
     setCardDetails(initialCardState), setConfirmed(!confirmed);
   };
   const handleBlur = (e: SyntheticEvent): void => {
@@ -145,7 +145,6 @@ function App() {
                 data-error-border={!inputErrors.numbersOnly}
                 inputMode="numeric"
                 required
-                // value={cardDetails.cardNumber}
               />
             </div>
             <div className="bottom-fieldset">
@@ -178,7 +177,7 @@ function App() {
                     name="year"
                     placeholder="YY"
                     onChange={handleChange}
-                    // onBlur={handleBlur}
+                    onBlur={handleBlur}
                     pattern="[0-9]{2}"
                     maxLength={2}
                     data-error-border={inputErrors.blankNumericField.year}
@@ -193,13 +192,14 @@ function App() {
                     inputErrors.blankNumericField.cvv ? "Can't be blank" : ""
                   }
                 >
-                  <p>CVC</p>
+                  <p>CVV</p>
                   <input
                     type="text"
+                    id="cvv"
                     name="cvv"
                     placeholder="e.g. 123 "
                     onChange={handleChange}
-                    // onBlur={handleBlur}
+                    onBlur={handleBlur}
                     pattern="[0-9]{3}"
                     maxLength={3}
                     data-error-border={inputErrors.blankNumericField.cvv}
